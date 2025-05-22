@@ -63,4 +63,29 @@ const signin = async(req,res)=>{
     }
 }
 
-module.exports = {signup , signin}
+const getAllUser = async (req,res) =>{
+    try {
+        const result = await User.find()
+        res.status(status.status.OK).send(response.createSuccessResponse(status.status.OK, "All Data retrieved Successfully", result))
+    } catch (error) {
+        res.status(status.status.INTERNAL_SERVER_ERROR).send(response.createErrorResponse(status.status.INTERNAL_SERVER_ERROR, "An error occured during retrieving all User data", error))
+    }
+}
+
+const getSingleUserById = async(req,res) =>{
+    try {
+        const {id} = req.params
+        console.log(id)
+        const result = await User.findById(id)
+        if(!result){
+            return res.status(status.status.NOT_FOUND).send(response.createErrorResponse(status.status.NOT_FOUND,"User not found" ))
+        }
+        if(result){
+            return res.status(status.status.OK).send(response.createSuccessResponse(status.status.OK, "Single user Data retrieved Successfully", result))
+        }
+    } catch (error) {
+        res.status(status.status.INTERNAL_SERVER_ERROR).send(response.createErrorResponse(status.status.INTERNAL_SERVER_ERROR, "An error occured during retrieving a user data", error))
+    }
+}
+
+module.exports = {signup , signin, getAllUser, getSingleUserById }

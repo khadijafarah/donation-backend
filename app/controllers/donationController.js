@@ -12,10 +12,26 @@ try {
     res.status(status.status.INTERNAL_SERVER_ERROR).send(response.createErrorResponse(status.status.INTERNAL_SERVER_ERROR, "An error occured during creation of New Donation", error))
 }
 }
-
+//Retrieve all donations
 const getAllDonation = async (req,res) =>{
+const {search,sort} = req.query
+let filter = {}
+//here regex is used to remove case sensitive
+if(search){
+    filter.title = {$regex: search , $options: "i"};
+}
+let sortingCategory = {}
+if(sort === "HighToLow"){
+    sortingCategory.amount = -1
+}
+if (sort === "LowToHigh"){
+    sortingCategory.amount = 1
+}
+
+
+console.log(search)
     try {
-        const result = await Donation.find()
+        const result = await Donation.find(filter).sort(sortingCategory);
         res.status(status.status.OK).send(response.createSuccessResponse(status.status.OK, "All Data retrieved Successfully", result))
     } catch (error) {
         res.status(status.status.INTERNAL_SERVER_ERROR).send(response.createErrorResponse(status.status.INTERNAL_SERVER_ERROR, "An error occured during retrieving all donation data", error))

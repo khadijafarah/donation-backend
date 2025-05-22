@@ -4,7 +4,7 @@ const fundRaisingTransactionController = require ("../controllers/fundRaisingTra
 
 
 router.post("/create-transaction" ,fundRaisingTransactionController.createTransaction)
-// router.get("/fundraisers" , fundRaisingController.getAllFundraiser)
+// router.get("/fundraisers-transaction" , fundRaisingTransactionController.getAllFundraisingTransaction)
 // router.get("/fundraisers/:id" ,fundRaisingController.getSingleFundraiserById)
 // router.put("/fundraisers/:id" , fundRaisingController.updateSingleFundraiser)
 // router.delete("/fundraisers/:id" , fundRaisingController.deleteFundraiser)
